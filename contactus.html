@@ -14,7 +14,7 @@ h1 {
     font-size: 72px;
     color: white;
     text-align: center;
- 
+  color:inherit;
 }
 
 h4 {
@@ -149,6 +149,7 @@ input[type=checkbox]:checked + label {
 			<h4 style="text-align:center">We'd love to hear from you!</h4>
 	</div>
 	<div class="row input-container">
+        <span id="msg"></span>
 			<div class="col-xs-12">
 				<div class="styled-input wide">
 					<input name="Name" type="text" required />
@@ -176,6 +177,9 @@ input[type=checkbox]:checked + label {
 			<div class="col-xs-12">
 				<button type="submit" name="button" class="btn-lrg submit-btn">Send Message</button>
 			</div>
+            
+               
+			
 	</div>
 </div>
 </form>
@@ -183,11 +187,20 @@ input[type=checkbox]:checked + label {
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbx4G2CAOfQQ2LLUXHPlWAuEzKAKlEzXuTYcEHV0gapXUi038gvAk6yqkIq-0YQLEIH6/exec'
     const form = document.forms['submit-to-google-sheet']
+    const msg  = document.getElementById('msg')
   
     form.addEventListener('submit', e => {
       e.preventDefault()
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => console.log('Success!', response))
+        .then(response => {
+            msg.innerHTML="Thank You for your message!"
+            setTimeout(() => {
+                msg.innerHTML=""
+                
+            }, 5000);
+            form.reset()
+        }
+        )
         .catch(error => console.error('Error!', error.message))
     })
   </script> 
